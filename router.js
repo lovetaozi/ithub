@@ -2,66 +2,46 @@ const express = require('express')
 // 创建路由容器
 const router = express.Router()
 
+const indexController = require('./controllers/index.js')
+const userController = require('./controllers/user.js')
+const topicController = require('./controllers/topic.js')
+const commentController = require('./controllers/comment.js')
 // 配置路由表
 
-// 首页路由
-router.get('/',(request,response)=>{
-	response.end('index')
-})
 
-// 请求登录页
-router.get('/signin', (request,response) => {
-	response.end('signin')
-})
+// 首页部分路由
+router
+	.get('/',indexController.showIndex)
 
-// 处理登录请求
-router.post('/signin',(request,response)=>{
-	response.end('check signin')
-})
 
-// 请求注册页面
-router.get('/signup',(request,response)=>{
-	response.end('signup')
-})
+// 用户部分路由
+router
+	.get('/signin', userController.showSignin)	//渲染请求登录页面
 
-// 处理注册请求
-router.post('/signup', (request,response)=>{
-	response.end('check signup')
-})
+	.post('/signin',userController.signin)		//处理登录请求
 
-// 处理退出请求
-router.get('/signout', (request,response)=>{
-	response.end('signout')
-})
+	.get('/signup',userController.showSignup)	//渲染注册页面
 
-// 渲染发布话题页面
-router.get('/topic/create', (request,response)=>{
-	response.end('topic create')
-})
+	.post('/signup', userController.signup) 	//处理用户注册
 
-// 处理发布请求
-router.post('/topic/create',(request,response)=>{
-	response.end('topic create check')
-})
+	.get('/signout', userController.signout)	//退出登录
 
-// 渲染话题详情
-router.get('/topic/:topicID',(request,response)=>{
-	response.end('topic topicID')
-})
 
-// 渲染编辑话题页面
-router.get('/topic/:topicID/edit',(request,response)=>{
-	response.end('topic edit show')
-})
 
-// 处理编辑话题请求
-router.post('/topic/:topicID/edit',(request,response)=>{
-	response.end('topic edit post')
-})
+// 话题相关路由
+router
+	.get('/topic/create', topicController.showCreate)	//渲染发布话题页面
 
-// 处理删除话题
-router.get('/topic/:topicID/delete',(request,response)=>{
-	response.end('topic delete')
-})
+	.post('/topic/create',topicController.create)		//处理话题发布
+
+	.get('/topic/:topicId',topicController.showDetail)  //渲染话题详情页
+
+	.get('/topic/:topicID/edit',topicController.showEdit)	//渲染话题编辑页面
+
+	.post('/topic/:topicID/edit',topicController.edit)		//处理编辑话题
+
+	.get('/topic/:topicID/delete',topicController.delete)		//删除话题
+
+
 
 module.exports = router
