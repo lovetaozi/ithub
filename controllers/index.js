@@ -1,4 +1,4 @@
 
 exports.showIndex = (request,response)=>{
-	response.end('index')
+	response.render('index.html')
 }

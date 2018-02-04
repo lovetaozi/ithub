@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/lovetaozi/ithub#readme",
   "dependencies": {
-    "express": "^4.16.2"
+    "art-template": "^4.12.2",
+    "bootstrap": "^3.3.7",
+    "express": "^4.16.2",
+    "express-art-template": "^1.0.0",
+    "jquery": "^3.3.1"
   }
 }

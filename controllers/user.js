@@ -1,5 +1,5 @@
 exports.showSignin = (request,response) => {
-	response.end('showSignin')
+	response.render('signin.html')
 }
 
 exports.signin = (request,response)=>{
@@ -7,7 +7,7 @@ exports.signin = (request,response)=>{
 }
 
 exports.showSignup = (request,response)=>{
-	response.end('showSignup')
+	response.render('signup.html')
 }
 
 exports.signup = (request,response)=>{
