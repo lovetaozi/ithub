@@ -16,20 +16,20 @@
       </a>
       <h1>用户注册</h1>
     </div>
-    <form id="register_form">
+    <form id="signup_form">
       <div class="form-group">
         <label for="email">邮箱</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Email" autofocus>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" autofocus required>
       </div>
       <div class="form-group">
         <label for="nickname">昵称</label>
-        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname">
+        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname" required>
       </div>
       <div class="form-group">
         <label for="password">密码</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
       </div>
-      <button type="button" class="btn btn-success btn-block">注册</button>
+      <button type="submit" class="btn btn-success btn-block">注册</button>
     </form>
     <div class="message">
       <p>已有账号? <a href="/login">点击登录</a>.</p>
@@ -37,6 +37,35 @@
   </div>
   <script src="/node_modules/jquery/dist/jquery.js"></script>
   <script>
+  </script>
+
+  <script>
+    var signupForm = $('#signup_form')
+
+    // 注册表单提交事件
+    signupForm.on('submit',function(e){
+      e.preventDefault()
+      handleSignup()
+    })
+
+    function handleSignup(){
+      var formData = signupForm.serialize()
+      $.ajax({
+        url: '/signup',
+        data: formData,
+        type: 'post',
+        dataType: 'json'
+        success:function(res){
+          console.log(res)
+        }
+
+        error:function(err){
+          window.alert('请求失败了')
+          console.log(err)
+        }
+      })
+    }
+
   </script>
 </body>
 
