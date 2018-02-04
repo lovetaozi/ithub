@@ -40,38 +40,41 @@
   </script>
 
   <script>
-    var signupForm = $('#signup_form')
-
+    var $signupForm = $('form')
+    
+  
     // 注册表单提交事件
-    signupForm.on('submit',function(e){
+    $signupForm.on('submit',function(e){
       e.preventDefault()
       handleSignup()
     })
 
     function handleSignup(){
-      var formData = signupForm.serialize()
+      var formData = $signupForm.serialize()
+
       $.ajax({
         url: '/signup',
         data: formData,
-        type: 'post',
-        dataType: 'json'
+        method: 'post',
+        dataType: 'json',
         success:function(res){
           var code = res.code
           switch(code){
             case 0:
               location.href="/"
               break
-            case 1
+            case 1:
               window.alert('邮箱已存在')
               break
-            case 2
+            case 2:
               window.alert('昵称已存在')
               break
           }
-        }
+        },
 
         error:function(err){
           window.alert('请求失败了')
+          console.log(err)
         }
       })
     }

@@ -1,8 +1,8 @@
-exports = {
+module.exports = {
 	dbConfig : {
 		host : 'localhost',
 		user : 'root',
-		password : '123456',
+		password : 'root',
 		database : 'ithub',
 		connectionLimit : 10
 	}

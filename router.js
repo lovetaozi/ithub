@@ -2,10 +2,10 @@ const express = require('express')
 // 创建路由容器
 const router = express.Router()
 
-const indexController = require('./controllers/index.js')
-const userController = require('./controllers/user.js')
-const topicController = require('./controllers/topic.js')
-const commentController = require('./controllers/comment.js')
+const indexController = require('./controllers/index')
+const userController = require('./controllers/user')
+const topicController = require('./controllers/topic')
+const commentController = require('./controllers/comment')
 // 配置路由表
 
 
@@ -20,7 +20,7 @@ router
 
 	.post('/signin',userController.signin)		//处理登录请求
 
-	.get('/signup',userController.showSignup)	//渲染注册页面
+	.get('/showSignup',userController.showSignup)	//渲染注册页面
 
 	.post('/signup', userController.signup) 	//处理用户注册
 

@@ -1,4 +1,5 @@
-const user = require('../models/user.js')
+const user = require('../models/user')
+console.log(user)
 const md5 = require('blueimp-md5')
 
 exports.showSignin = (request,response) => {
@@ -9,8 +10,9 @@ exports.signin = (request,response)=>{
 	response.end('signin')
 }
 
-exports.showSignup = (request,response)=>{
+exports.signup = (request,response)=>{
 	const body = request.body
+	console.log(body)
 	user.findByEmail(body.email,(err,result)=>{
 		if(err){
 			return response.status(500).json({
@@ -24,42 +26,44 @@ exports.showSignup = (request,response)=>{
 				message:'email exists'
 			})
 		}
-	})
 
 
-	user.findByNickname(body.nickname,(err,result)=>{
-		if(err){
-			return response.status(500).json({
-				error:err.message
+		user.findByNickname(body.nickname,(err,result)=>{
+			if(err){
+				return response.status(500).json({
+					error:err.message
+				})
+			}
+
+			if(result){
+				return response.status(200).json({
+					code:2,
+					message:'nickname exists'
+				})
+			}
+
+			body.password = md5(body.password)
+
+			user.save(body,(err,result)=>{
+				if(err){
+					return response.status(500).json({
+						error:err.message
+					})
+				}
+		
+				response.status(200).json({
+					code:0,
+					message:'success'
+				})
 			})
-		}
-
-		if(result){
-			return response.status(200).json({
-				code:2
-				message:'nickname exists'
-			})
-		}
-	})
-
-	body.password = md5(body.password)
-
-	user.save(body,(err,result)=>{
-		if(err){
-			return response.status(500).json({
-				error:err.message
-			})
-		}
-
-		response.status(200).json({
-			code:0,
-			message:'success'
 		})
+
 	})
+	
 }
 
-exports.signup = (request,response)=>{
-	response.end('signup')
+exports.showSignup = (request,response)=>{
+	response.render('signup.html')
 }
 
 exports.signout = (request,response)=>{

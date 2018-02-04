@@ -15,7 +15,7 @@ exports.findByEmail = (email,callback)=>{
 	})
 }
 
-exports.findByNickName = (nickName,callback)=>{
+exports.findByNickname = (nickName,callback)=>{
 	const sql = 'SELECT * FROM `users` WHERE `nickname`=?'
 	query(sql,[nickName],(err,results)=>{
 		if(err){
@@ -27,8 +27,8 @@ exports.findByNickName = (nickName,callback)=>{
 }
 
 exports.save = (user,callback) => {
+	user.createdAt = null
 	const sql = 'INSERT INTO `users` SET ?'
-	user.createAt = null
 	query(sql,user,(err,result)=>{
 		if(err){
 			return callback(err)

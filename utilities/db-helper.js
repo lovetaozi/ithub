@@ -1,6 +1,5 @@
 const mysql = require('mysql')
-const {dbConfig} = require('../config.js')
-
+const {dbConfig} = require('../config')
 const pool = mysql.createPool(dbConfig)
 
 exports.query = (...args) => {
@@ -8,7 +7,7 @@ exports.query = (...args) => {
 
 	pool.getConnection((err,connection) => {
 		if(err){
-			callback(err)
+			return callback(err)
 		}
 
 		connection.query(...args,(err,result)=>{
@@ -17,6 +16,7 @@ exports.query = (...args) => {
 			connection.release()
 
 			if(err){
+
 				return callback(err)
 			}
 
