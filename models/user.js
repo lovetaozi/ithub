@@ -2,6 +2,7 @@
 
 const {query} = require('../utilities/db-helper.js')
 
+
 exports.findByEmail = (email,callback)=>{
 	const sql = 'SELECT * FROM `users` WHERE `email` = ?'
 	query(sql, [email],(err,results)=>{
@@ -27,11 +28,12 @@ exports.findByNickName = (nickName,callback)=>{
 
 exports.save = (user,callback) => {
 	const sql = 'INSERT INTO `users` SET ?'
+	user.createAt = null
 	query(sql,user,(err,result)=>{
 		if(err){
 			return callback(err)
 		}
 
-		callback(result)
+		callback(null,result)
 	})
 }
