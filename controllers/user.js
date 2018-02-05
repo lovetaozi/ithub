@@ -107,5 +107,6 @@ exports.showSignup = (request,response)=>{
 }
 
 exports.signout = (request,response)=>{
-	response.end('signout')
+	delete request.session.user
+	response.redirect('/showSignin')
 }
