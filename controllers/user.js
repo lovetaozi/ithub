@@ -1,5 +1,5 @@
 const user = require('../models/user')
-console.log(user)
+
 const md5 = require('blueimp-md5')
 
 exports.showSignin = (request,response) => {
@@ -7,12 +7,41 @@ exports.showSignin = (request,response) => {
 }
 
 exports.signin = (request,response)=>{
-	response.end('signin')
+	
+	const body = request.body
+
+	user.findByEmail(body.email,function(err,result){
+		if(err){
+			return response.status(500).json({
+				error:'err.message'
+			})
+		}
+		// 如果邮箱不存在
+		if(!result){
+			return response.status(200).response.json({
+				code : 1,
+				message : 'email not exists'
+			})
+		}
+		
+		if(md5(body.password) !== result.password){
+			return response.status(200).json({
+				code : 2,
+				message : 'password invalid'
+			})
+		}
+
+		response.status(200).json({
+			code : 0,
+			message : 'success'
+		})
+
+	})
 }
 
 exports.signup = (request,response)=>{
 	const body = request.body
-	console.log(body)
+	
 	user.findByEmail(body.email,(err,result)=>{
 		if(err){
 			return response.status(500).json({
@@ -43,7 +72,6 @@ exports.signup = (request,response)=>{
 			}
 
 			body.password = md5(body.password)
-
 			user.save(body,(err,result)=>{
 				if(err){
 					return response.status(500).json({

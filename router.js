@@ -16,7 +16,7 @@ router
 
 // 用户部分路由
 router
-	.get('/signin', userController.showSignin)	//渲染请求登录页面
+	.get('/showSignin', userController.showSignin)	//渲染请求登录页面
 
 	.post('/signin',userController.signin)		//处理登录请求
 
