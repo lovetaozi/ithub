@@ -16,6 +16,7 @@ exports.signin = (request,response)=>{
 				error:'err.message'
 			})
 		}
+
 		// 如果邮箱不存在
 		if(!result){
 			return response.status(200).response.json({
@@ -30,6 +31,9 @@ exports.signin = (request,response)=>{
 				message : 'password invalid'
 			})
 		}
+
+		// 登录通过后将产寻到的用户信息存储到session中
+		request.session.user = result
 
 		response.status(200).json({
 			code : 0,
@@ -72,13 +76,21 @@ exports.signup = (request,response)=>{
 			}
 
 			body.password = md5(body.password)
+
 			user.save(body,(err,result)=>{
 				if(err){
 					return response.status(500).json({
 						error:err.message
 					})
 				}
-		
+				
+				const userId = result.insertId
+				// 注册成功后将数据存到session中
+				request.session.user = {
+					...body,
+					userId : userId
+				}
+
 				response.status(200).json({
 					code:0,
 					message:'success'

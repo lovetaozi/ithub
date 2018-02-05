@@ -1,4 +1,4 @@
 
 exports.showIndex = (request,response)=>{
-	response.render('index.html')
+	response.render('index.html',{user:request.session.user})
 }
